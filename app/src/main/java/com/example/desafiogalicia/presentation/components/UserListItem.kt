@@ -42,7 +42,7 @@ fun UserListItem(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Profile picture
+            // Foto de perfil
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(user.picture.thumbnail)
@@ -57,7 +57,7 @@ fun UserListItem(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // User info
+            // Información del usuario
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -94,7 +94,7 @@ fun UserListItem(
                 )
             }
 
-            // Favorite button
+            // Botón de favorito
             IconButton(
                 onClick = onFavoriteClick
             ) {

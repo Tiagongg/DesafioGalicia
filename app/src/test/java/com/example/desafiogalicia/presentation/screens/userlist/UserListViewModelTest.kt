@@ -32,7 +32,7 @@ class UserListViewModelTest {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatcher)
         
-        // Setup default successful response for initial load
+        // Configurar respuesta exitosa por defecto para la carga inicial
         runTest {
             whenever(userRepository.getUsers(1, 10, null))
                 .thenReturn(Result.success(listOf(createMockUser())))
@@ -48,12 +48,12 @@ class UserListViewModelTest {
 
     @Test
     fun `initial state is correct`() = runTest {
-        // Given - ViewModel is initialized
+        // Dado - El ViewModel está inicializado
         
-        // When - Get initial state
+        // Cuando - Obtener el estado inicial
         val state = viewModel.uiState.first()
         
-        // Then
+        // Entonces
         assertEquals(1, state.users.size)
         assertFalse(state.isLoading)
         assertEquals(null, state.error)
@@ -62,29 +62,29 @@ class UserListViewModelTest {
 
     @Test
     fun `loadUsers sets loading state correctly`() = runTest {
-        // Given
+        // Dado
         whenever(userRepository.getUsers(1, 10, null))
             .thenReturn(Result.success(emptyList()))
         
-        // When
+        // Cuando
         viewModel.refreshUsers()
         
-        // Then
+        // Entonces
         verify(userRepository).getUsers(1, 10, null)
     }
 
     @Test
     fun `loadUsers with error shows error state`() = runTest {
-        // Given
+        // Dado
         val errorMessage = "Network error"
         whenever(userRepository.getUsers(1, 10, null))
             .thenReturn(Result.failure(RuntimeException(errorMessage)))
         
-        // When
+        // Cuando
         viewModel.refreshUsers()
         advanceUntilIdle()
         
-        // Then
+        // Entonces
         val state = viewModel.uiState.value
         assertFalse(state.isLoading)
         assertEquals(errorMessage, state.error)
@@ -92,47 +92,47 @@ class UserListViewModelTest {
 
     @Test
     fun `searchUsers updates search query and calls repository with nationality`() = runTest {
-        // Given
+        // Dado
         val nationality = "US"
         whenever(userRepository.getUsers(1, 10, nationality))
             .thenReturn(Result.success(listOf(createMockUser())))
         
-        // When
+        // Cuando
         viewModel.searchUsers(nationality)
         advanceUntilIdle()
         
-        // Then
+        // Entonces
         verify(userRepository).getUsers(1, 10, nationality)
         assertEquals(nationality, viewModel.uiState.value.searchQuery)
     }
 
     @Test
     fun `toggleFavorite calls repository methods correctly`() = runTest {
-        // Given
+        // Dado
         val user = createMockUser()
         whenever(userRepository.isFavorite(user.login.uuid)).thenReturn(false)
         
-        // When
+        // Cuando
         viewModel.toggleFavorite(user)
         advanceUntilIdle()
         
-        // Then
+        // Entonces
         verify(userRepository).isFavorite(user.login.uuid)
         verify(userRepository).addToFavorites(user)
     }
 
     @Test
     fun `clearError resets error state`() = runTest {
-        // Given - Set an error state first
+        // Dado - Set an error state first
         whenever(userRepository.getUsers(1, 10, null))
             .thenReturn(Result.failure(RuntimeException("Test error")))
         viewModel.refreshUsers()
         advanceUntilIdle()
         
-        // When
+        // Cuando
         viewModel.clearError()
         
-        // Then
+        // Entonces
         assertEquals(null, viewModel.uiState.value.error)
     }
 

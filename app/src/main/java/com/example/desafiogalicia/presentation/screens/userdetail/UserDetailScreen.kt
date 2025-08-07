@@ -42,7 +42,7 @@ fun UserDetailScreen(
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Top App Bar
+        // Barra superior de navegación
         TopAppBar(
             title = { Text("Detalle del Usuario") },
             navigationIcon = {
@@ -66,7 +66,7 @@ fun UserDetailScreen(
             }
         )
 
-        // Content
+        // Contenido
         if (uiState.isLoading) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -115,7 +115,7 @@ private fun UserDetailContent(
         modifier = modifier.verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Profile picture
+                        // Foto de perfil
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(user.picture.large)
@@ -130,7 +130,7 @@ private fun UserDetailContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Name
+                        // Nombre
         Text(
             text = user.name.fullName,
             style = MaterialTheme.typography.headlineMedium,
@@ -139,7 +139,7 @@ private fun UserDetailContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Information cards
+                        // Tarjetas de información
         InfoCard(
             title = "Información Personal",
             items = listOf(

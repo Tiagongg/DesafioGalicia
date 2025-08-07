@@ -31,14 +31,14 @@ fun UserListScreen(
     var searchText by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    // Removed infinite scroll logic - now using discrete pagination
+    // Se eliminó la lógica de scroll infinito - ahora usa paginación discreta
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Header
+        // Encabezado
         Text(
             text = "Usuarios",
             style = MaterialTheme.typography.headlineMedium,
@@ -46,7 +46,7 @@ fun UserListScreen(
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Search bar
+        // Barra de búsqueda
         OutlinedTextField(
             value = searchText,
             onValueChange = { searchText = it },
@@ -92,7 +92,7 @@ fun UserListScreen(
             }
         }
 
-        // Error handling
+        // Manejo de errores
         uiState.error?.let { error ->
             Card(
                 modifier = Modifier
@@ -126,7 +126,7 @@ fun UserListScreen(
             }
         }
 
-        // Users list
+        // Lista de usuarios
         LazyColumn(
             state = listState,
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -156,7 +156,7 @@ fun UserListScreen(
             }
         }
         
-        // Pagination Controls - Always show if we have users or are loading
+        // Controles de paginación - Siempre mostrar si tenemos usuarios o estamos cargando
         if (uiState.users.isNotEmpty() || (uiState.isLoading && uiState.currentPage > 1)) {
             Card(
                 modifier = Modifier
@@ -171,7 +171,7 @@ fun UserListScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Previous button
+                    // Botón anterior
                     Button(
                         onClick = { viewModel.goToPreviousPage() },
                         enabled = uiState.hasPreviousPage && !uiState.isLoading,
@@ -184,7 +184,7 @@ fun UserListScreen(
                         )
                     }
                     
-                    // Page indicator
+                    // Indicador de página
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.weight(0.4f)
@@ -209,7 +209,7 @@ fun UserListScreen(
                         }
                     }
                     
-                    // Next button
+                    // Botón siguiente
                     Button(
                         onClick = { viewModel.goToNextPage() },
                         enabled = uiState.hasNextPage && !uiState.isLoading,
@@ -225,7 +225,7 @@ fun UserListScreen(
             }
         }
 
-        // Empty state
+        // Estado vacío
         if (uiState.users.isEmpty() && !uiState.isLoading && uiState.error == null) {
             Box(
                 modifier = Modifier.fillMaxSize(),

@@ -20,7 +20,7 @@ class UserRepository @Inject constructor(
         nationality: String? = null
     ): Result<List<User>> {
         return try {
-            // Generate unique seed per nationality to avoid UUID overlaps
+            // Generar seed único por nacionalidad para evitar solapamiento de UUIDs
             val seed = if (nationality.isNullOrBlank()) {
                 "challenge"
             } else {
@@ -39,7 +39,7 @@ class UserRepository @Inject constructor(
         }
     }
     
-    // Favorite users methods
+    // Métodos de usuarios favoritos
     fun getAllFavorites(): Flow<List<FavoriteUser>> {
         return favoriteUserDao.getAllFavorites()
     }

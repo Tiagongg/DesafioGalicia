@@ -61,11 +61,11 @@ class UserListViewModel @Inject constructor(
             ).fold(
                 onSuccess = { newUsers ->
                     _uiState.value = _uiState.value.copy(
-                        users = newUsers,  // Always replace, not append
+                        users = newUsers,  // Siempre reemplazar, no agregar
                         isLoading = false,
                         error = null,
                         currentPage = currentPage,
-                        hasNextPage = newUsers.size == 10,  // If we got 10, there might be more
+                        hasNextPage = newUsers.size == 10,  // Si recibimos 10, puede haber más
                         hasPreviousPage = currentPage > 1
                     )
                     
@@ -111,7 +111,7 @@ class UserListViewModel @Inject constructor(
                 } else {
                     userRepository.addToFavorites(user)
                 }
-                // Note: The UI will update automatically through observeFavorites()
+                // Nota: La UI se actualizará automáticamente a través de observeFavorites()
                 
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
